@@ -1,24 +1,14 @@
-"""Experimental section of SHARED graph UAI2025
-
+"""Experimental section, Scenario 1, UAI2025
 In this example we simulate data: Do, De, Do* with binary outcome Y
-- Do and De based on population  Π:
-                                        X -> Y
-                                        Z2 -> Y
-                                        Z1 -> Y
-                                    Confounders:
-                                        Z2 -> X
-                                    ,and Z2〜Bernoulli(0.3), Z1〜Bernoulli(0.9)
-
-Z1 has different distribution in Π and Π*. In Π*: Z2〜Bernoulli(0.3), Z1〜Bernoulli(0.7, 0.4, 0.2)
-
-intercept_Y= -0.5  # Intercept for Y
-b_X_Y= -2  # Effect of X on Y
-b_Z2_Y = 2.5  # Effect of Z2 on Y
-b_Z1_Y = 3  # Effect of Z1 on Y
-# Observational data coefficients
-intercept_T_obs = 0  # Intercept for T
-b_Z2_T_obs = 2  # Strong effect of Z2 on T (confounder)
-
+- Do on population  Π:
+                        X -> Y
+                        Z -> Y
+                        W -> Y
+                    Confounders:
+                        Z -> X
+                        W -> X  (in Π* this arrow does not exist)
+                        
+P(Z)<>P*(Z) and P(W)<>P*(W)
 """
 
 import jax
@@ -28,7 +18,6 @@ import numpyro
 import numpyro.distributions as dist
 from numpyro.infer import MCMC, NUTS
 from jax import random
-from itertools import combinations
 from sklearn.metrics import log_loss
 import pandas as pd
 import math
